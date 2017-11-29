@@ -61,3 +61,5 @@ gem 'rails-controller-testing'
 gem 'simple_form'
 
 gem 'devise'
+
+gem 'omniauth-facebook'

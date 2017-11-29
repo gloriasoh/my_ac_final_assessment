@@ -1,15 +1,18 @@
-p Lorem ipsum...
 = link_to 'Sign Out', destroy_user_session_path, method: :delete
 br
 
 - @notes.each do |note|
   br
   = note.body
+  -if current_user.liked?(note)
+    = link_to 'Unlike', unlike_path(note), method: :delete
+  -else
+    = link_to 'Like', like_path(note), method: :post
   = link_to 'Edit', edit_note_path(note)
   = link_to 'Delete', note_path(note), method: :delete, 'data-confirm': 'Are you sure?'
 
 br
-
+- if user_signed_in?
   - @user.each do |user|
     br
     = user.email
@@ -17,3 +20,10 @@ br
      = render partial: "unfollow", locals: { user: user }
     -else
      = render partial: "follow", locals: { user: user }
+- else
+  - @user.each do |user|
+    br
+    = user.email
+
+
+br

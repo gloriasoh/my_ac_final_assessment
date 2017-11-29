@@ -1,12 +1,26 @@
 class NotesController < ApplicationController
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index]
   before_action :find_id, only: [:edit, :update, :destroy]
 
   def index
     @notes = Note.all
-    @user = current_user
-    @user = User.all.where("id != ?", current_user.id)
+    @user = User.all
+    # .where("id != ?", current_user.id)
+  end
+
+  def like
+    @note = Note.find(params[:id])
+    @note.likes.create(user: current_user)
+    redirect_to root_path
+  end
+
+  def unlike
+    @note = Note.find(params[:id])
+    @like = @note.likes.find_by(user: current_user)
+    @like.destroy
+    # @note.likes.destroy(user: current_user)
+    redirect_to root_path
   end
 
   def create

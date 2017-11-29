@@ -2,7 +2,7 @@
 
 User Stories
 
-Devise- DONE
+Devise-
 I can sign up for a user account
 I can sign in to my user account
 
@@ -15,9 +15,9 @@ On my homepage, I should see a dashboard that will show me:
 Authentication and one to many association-
 User has many notes
 Note belongs to a User
-Only after I have signed in, I can create a note  DONE
-Only after I have signed in, I can edit a note DONE
-Only after I have signed in, I can destroy a note (doing this will automatically destroy it's associations)
+Only after I have signed in, I can create a note
+Only after I have signed in, I can edit a note
+Only after I have signed in, I can destroy a note (doing this will automatically destroy it's associations) 
 Please have enough seed data in the database to demonstrate this.
 Only after I have signed in, I can view a list of users I am not following in the DB, and choose to follow some users.
 
