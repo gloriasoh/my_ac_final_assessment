@@ -31,7 +31,6 @@ class User < ApplicationRecord
     likes.exists?(note_id: note.id)
   end
 
-
   def self.from_omniauth(auth)
   where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
     user.email = auth.info.email
@@ -39,7 +38,12 @@ class User < ApplicationRecord
     # If you are using confirmable and the provider(s) you use validate emails,
     # uncomment the line below to skip the confirmation emails.
     # user.skip_confirmation!
+    end
+  end 
+
+  def feed
+    following_ids = "SELECT leader_id FROM followings WHERE follower_id = :user_id"
+    Note.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
   end
-end
 
 end

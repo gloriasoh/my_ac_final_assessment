@@ -9,7 +9,6 @@
 User.create(email: 'testing@gmail.com', password: 'password')
 User.create(email: 'abc@gmail.com', password: 'password')
 
-Note.create(user_id: 1, body: 'Hello there')
-Note.create(user_id: 1, body: 'The angel of my nightmare')
-
-Note.create(user_id: 2, body: 'We were both young when i first met you')
+Note.create(user_id: 1, title: 'Test1', body: 'Hello there')
+Note.create(user_id: 1, title: 'Test2', body: 'The angel of my nightmare')
+Note.create(user_id: 2, title: 'Taylor', body: 'We were both young when i first met you')

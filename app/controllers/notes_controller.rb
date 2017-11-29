@@ -6,12 +6,14 @@ class NotesController < ApplicationController
   def index
     @notes = Note.all
     @user = User.all
-    # .where("id != ?", current_user.id)
+    @note = current_user.feed.order("created_at DESC") if current_user
+
   end
 
   def like
     @note = Note.find(params[:id])
     @note.likes.create(user: current_user)
+    UserMailer.notice(current_user).deliver_later
     redirect_to root_path
   end
 
@@ -19,7 +21,7 @@ class NotesController < ApplicationController
     @note = Note.find(params[:id])
     @like = @note.likes.find_by(user: current_user)
     @like.destroy
-    # @note.likes.destroy(user: current_user)
+    UserMailer.notice(current_user.email).deliver_later
     redirect_to root_path
   end
 
@@ -57,7 +59,7 @@ class NotesController < ApplicationController
 private
 
 def note_params
-  params.require(:note).permit(:body)
+  params.require(:note).permit(:title, :body)
 end
 
 def find_id

@@ -1,29 +1,61 @@
-= link_to 'Sign Out', destroy_user_session_path, method: :delete
-br
-
-- @notes.each do |note|
-  br
-  = note.body
-  -if current_user.liked?(note)
-    = link_to 'Unlike', unlike_path(note), method: :delete
+.jumbotron
+  -if user_signed_in?
+    = link_to 'Sign Out', destroy_user_session_path, method: :delete
+    br
+    = link_to 'Add new note', new_note_path
   -else
-    = link_to 'Like', like_path(note), method: :post
-  = link_to 'Edit', edit_note_path(note)
-  = link_to 'Delete', note_path(note), method: :delete, 'data-confirm': 'Are you sure?'
+    = link_to 'Sign in', new_user_session_path
+  br
 
-br
-- if user_signed_in?
-  - @user.each do |user|
-    br
-    = user.email
-    -if current_user.following?(user)
-     = render partial: "unfollow", locals: { user: user }
-    -else
-     = render partial: "follow", locals: { user: user }
-- else
-  - @user.each do |user|
-    br
-    = user.email
+  .container
+    .row
+      -unless user_signed_in?
+        - @notes.each do |note|
+          .card
+            .card style=("width: 280px; height:250px;")
+              br
+              h4 = note.title
+              br
+              =note.user.email
+              br
+              = note.body
+              |&nbsp;
+
+      -else
+        - @note.each do |note|
+          .card
+            br
+            = note.user.email
+            br
+            = note.title
+            br
+            = note.body
+            |&nbsp;
+            -if current_user.liked?(note)
+              = link_to 'Unlike', unlike_path(note), method: :delete
+            -else
+              = link_to 'Like', like_path(note), method: :post
+            -if note.user == current_user
+              |&nbsp;
+              = link_to 'Edit', edit_note_path(note)
+              |&nbsp;
+              = link_to 'Delete', note_path(note), method: :delete, 'data-confirm': 'Are you sure?'
+            br
+
+      br
+
+          - if user_signed_in?
+            - @user.each do |user|
+              br
+              = user.email
+              -if current_user.following?(user)
+               = render partial: "unfollow", locals: { user: user }
+              -else
+               = render partial: "follow", locals: { user: user }
+          - else
+            - @user.each do |user|
+              br
+              = user.email
 
 
 br

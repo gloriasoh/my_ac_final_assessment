@@ -63,3 +63,5 @@ gem 'simple_form'
 gem 'devise'
 
 gem 'omniauth-facebook'
+
+gem 'mailcatcher'
