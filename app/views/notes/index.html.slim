@@ -1,6 +1,19 @@
 p Lorem ipsum...
+= link_to 'Sign Out', destroy_user_session_path, method: :delete
+br
 
-- @notes.each do |f|
-  = f.body
-  = link_to 'Edit', edit_note_path(f)
-  = link_to 'Delete', note_path(f), method: :delete, 'data-confirm': 'Are you sure?'
+- @notes.each do |note|
+  br
+  = note.body
+  = link_to 'Edit', edit_note_path(note)
+  = link_to 'Delete', note_path(note), method: :delete, 'data-confirm': 'Are you sure?'
+
+br
+
+  - @user.each do |user|
+    br
+    = user.email
+    -if current_user.following?(user)
+     = render partial: "unfollow", locals: { user: user }
+    -else
+     = render partial: "follow", locals: { user: user }

@@ -1,9 +1,12 @@
 class NotesController < ApplicationController
 
+  before_action :authenticate_user!
   before_action :find_id, only: [:edit, :update, :destroy]
 
   def index
     @notes = Note.all
+    @user = current_user
+    @user = User.all.where("id != ?", current_user.id)
   end
 
   def create
