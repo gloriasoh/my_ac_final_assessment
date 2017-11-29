@@ -1,0 +1,6 @@
+p Lorem ipsum...
+
+- @notes.each do |f|
+  = f.body
+  = link_to 'Edit', edit_note_path(f)
+  = link_to 'Delete', note_path(f), method: :delete, 'data-confirm': 'Are you sure?'
